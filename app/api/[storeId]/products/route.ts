@@ -2,21 +2,21 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import prismadb from "@/lib/prismadb";
 
-// const allowedOrigin =
-//   process.env.NEXT_PUBLIC_STORE_URL ?? 'http://localhost:3001'; // your frontend URL
+const allowedOrigin =
+  process.env.NEXT_PUBLIC_STORE_URL ?? 'http://localhost:3001'; // your frontend URL
 
-// const corsHeaders = {
-//   'Access-Control-Allow-Origin': allowedOrigin,
-//   'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-//   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-// };
+const corsHeaders = {
+  'Access-Control-Allow-Origin': allowedOrigin,
+  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
 
-// export function OPTIONS() {
-//   return new NextResponse(null, {
-//     status: 204,
-//     headers: corsHeaders,
-//   });
-// }
+export function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
 
 export async function POST(req: Request, { params }: { params: { storeId: string } }) {
   try {
@@ -166,12 +166,12 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
       return { ...product, name: productName, description: productDescription };
     });
 
-    return NextResponse.json(updatedProducts);
+    return NextResponse.json(updatedProducts, { headers: corsHeaders });
   } catch (error) {
     console.error('[PRODUCTS_GET]', error);
     return new NextResponse('An error occurred while processing the request.', {
       status: 500,
-      // headers: corsHeaders,
+      headers: corsHeaders,
     });
   }
 }
