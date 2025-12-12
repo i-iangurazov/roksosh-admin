@@ -8,14 +8,14 @@ type ProductPayload = {
   sizeId?: string;
 };
 
-const allowedOrigin =
-  process.env.NEXT_PUBLIC_STORE_URL ?? 'http://localhost:3001'; // your frontend URL
+// const allowedOrigin =
+//   process.env.NEXT_PUBLIC_STORE_URL ?? 'http://localhost:3001'; // your frontend URL
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': allowedOrigin,
-  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
+// const corsHeaders = {
+//   'Access-Control-Allow-Origin': allowedOrigin,
+//   'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+//   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+// };
 
 export async function POST(req: Request, { params }: { params: { storeId: string } }) {
   try {
@@ -60,13 +60,9 @@ export async function POST(req: Request, { params }: { params: { storeId: string
       },
     });
 
-    return NextResponse.json({ id: order.id }, { headers: corsHeaders });
+    return NextResponse.json({ id: order.id });
   } catch (error) {
     console.error("[MANUAL_ORDER]", error);
-    return new NextResponse("Internal Error", { status: 500, headers: corsHeaders, });
+    return new NextResponse("Internal Error", { status: 500 });
   }
-}
-
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
 }
