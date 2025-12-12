@@ -8,7 +8,6 @@ out
 .env.development
 .env.production
 .pnpm-store
-pnpm-lock.yaml
 yarn.lock
 package-lock.json
 *.log
