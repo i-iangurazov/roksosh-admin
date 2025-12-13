@@ -19,21 +19,21 @@ const ColorClient = ({ data }: { data: ColorColumn[] }) => {
     <React.Fragment>
       <div className="flex flex-wrap items-center justify-between gap-y-3">
         <Heading
-          title={`Colors (${data.length})`}
-          description="Manage colors for your store"
+          title={`Finishes (${data.length})`}
+          description="Manage upholstery and wood/metal finishes"
         />
 
         <Button asChild className="min-w-fit">
           <Link href={`/${params.storeId}/colors/new`}>
             <Plus className="mr-2 w-4" />
-            Add New
+            Add finish
           </Link>
         </Button>
       </div>
       <Separator />
       <DataTable columns={columns} data={data} searchKey="name" />
       <section>
-        <Heading title="API" description="API calls for Colors" />
+        <Heading title="API" description="API calls for finishes" />
         <Separator className="my-2" />
         <ApiList entityName="colors" entityIdName="colorId" />
       </section>

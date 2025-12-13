@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 
 // Update the form schema to handle new fields for name in different languages
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "Finish name is required"),
   nameRu: z.string().min(1, "Russian name is required"),
   nameKg: z.string().min(1, "Kyrgyz name is required"),
   value: z.string().regex(/^#[0-9a-fA-F]{6}$/, {
@@ -38,7 +38,7 @@ export const ColorForm = ({ initialData }: { initialData: Color | null }) => {
 
   const [loading, setLoading] = React.useState(false);
 
-  const toastMessage = initialData ? "Color updated." : "Color created.";
+  const toastMessage = initialData ? "Finish updated." : "Finish created.";
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<ColorFormValues>({
@@ -79,10 +79,10 @@ export const ColorForm = ({ initialData }: { initialData: Color | null }) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Finish / upholstery name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Color name"
+                    placeholder="e.g. Pebble linen, Walnut veneer, Black metal"
                     disabled={loading}
                     {...field}
                     title={field.name}
@@ -98,10 +98,10 @@ export const ColorForm = ({ initialData }: { initialData: Color | null }) => {
             name="nameRu"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Russian Name</FormLabel>
+                <FormLabel>Russian name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Color name in Russian"
+                    placeholder="Название отделки"
                     disabled={loading}
                     {...field}
                     title={field.name}
@@ -117,10 +117,10 @@ export const ColorForm = ({ initialData }: { initialData: Color | null }) => {
             name="nameKg"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Kyrgyz Name</FormLabel>
+                <FormLabel>Kyrgyz name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Color name in Kyrgyz"
+                    placeholder="Аякталуу аталышы"
                     disabled={loading}
                     {...field}
                     title={field.name}
@@ -138,7 +138,7 @@ export const ColorForm = ({ initialData }: { initialData: Color | null }) => {
             name="value"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Value</FormLabel>
+                <FormLabel>Swatch hex value</FormLabel>
                 <FormControl>
                   <div className="grid grid-flow-col items-center gap-x-2">
                     <Input

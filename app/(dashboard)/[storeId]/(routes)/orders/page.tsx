@@ -32,7 +32,7 @@ const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
     address: order.address,
     customer: order.address.split("\n")[0] || "Customer",
     productsList: order.orderItems.map((orderItem) => {
-      const productName = [orderItem.product.brand, orderItem.product.name].filter(Boolean).join(" ");
+      const productName = orderItem.product.name;
       const variant = [orderItem.color?.name, orderItem.size?.name].filter(Boolean).join(" / ");
       return `${productName} - ${variant || "N/A"} - x${orderItem.quantity}`;
     }),

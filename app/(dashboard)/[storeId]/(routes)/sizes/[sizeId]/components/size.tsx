@@ -20,8 +20,8 @@ export const Size = ({ initialData }: { initialData: SizeModel | null }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const title = initialData ? "Edit size" : "Create size";
-  const description = initialData ? "Edit a size" : "Add a new size";
+  const title = initialData ? "Edit variant" : "Create variant";
+  const description = initialData ? "Edit a variant" : "Add a new variant";
 
   const onDelete = async () => {
     try {
@@ -29,9 +29,9 @@ export const Size = ({ initialData }: { initialData: SizeModel | null }) => {
       await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`);
       router.refresh();
       router.push(`/${params.storeId}/sizes`);
-      toast.success("Size deleted.");
+      toast.success("Variant deleted.");
     } catch (error) {
-      toast.error("Make shure you removed all products using this size first.");
+      toast.error("Remove this variant from products before deleting it.");
     } finally {
       setLoading(false);
       setOpen(false);

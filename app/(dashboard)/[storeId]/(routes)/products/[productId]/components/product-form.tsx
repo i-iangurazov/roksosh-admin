@@ -39,7 +39,6 @@ const formSchema = z.object({
   description: z.string().min(1),
   descriptionRu: z.string().min(1),
   descriptionKg: z.string().min(1),
-  brand: z.string().min(1),
   images: z
     .object({
       url: z.string().url(),
@@ -48,6 +47,10 @@ const formSchema = z.object({
     .nonempty({ message: "At least one image is required" }),
   price: z.coerce.number().min(0.01),
   weight: z.coerce.number().min(0.01),
+  dimensions: z.string().min(1, { message: "Dimensions are required" }),
+  materials: z.string().min(1, { message: "Materials are required" }),
+  customization: z.string().optional(),
+  leadTime: z.string().optional(),
   categoryId: z.string().min(1, { message: "Category is required" }),
   colorIds: z.array(z.string()).min(1, { message: "Select at least one color" }),
   sizeIds: z.array(z.string()).min(1, { message: "Select at least one size" }),
@@ -87,9 +90,12 @@ export const ProductForm = ({
           description: initialData.description,
           descriptionRu: initialData.descriptionRu,
           descriptionKg: initialData.descriptionKg,
-          brand: initialData.brand,
           price: parseFloat(String(initialData.price)),
           weight: parseFloat(String(initialData.weight)),
+          dimensions: initialData.dimensions,
+          materials: initialData.materials,
+          customization: initialData.customization ?? "",
+          leadTime: initialData.leadTime ?? "",
           categoryId: initialData.categoryId,
           colorIds: initialData.colors?.map((color) => color.id) ?? [],
           sizeIds: initialData.sizes?.map((size) => size.id) ?? [],
@@ -104,10 +110,13 @@ export const ProductForm = ({
           description: "",
           descriptionRu: "",
           descriptionKg: "",
-          brand: "",
           images: [],
           price: 0,
           weight: 0,
+          dimensions: "",
+          materials: "",
+          customization: "",
+          leadTime: "",
           categoryId: "",
           colorIds: [],
           sizeIds: [],
@@ -242,24 +251,6 @@ export const ProductForm = ({
           />
           <FormField
             control={form.control}
-            name="brand"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Brand</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Brand"
-                    disabled={loading}
-                    {...field}
-                    title={field.name}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="categoryId"
             render={({ field }) => (
               <FormItem>
@@ -304,13 +295,69 @@ export const ProductForm = ({
             )}
           />
         </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="dimensions"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Dimensions & layout</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="e.g. Width 280 cm x Depth 170 cm x Height 85 cm. Mention chaise orientation or modular notes."
+                    disabled={loading}
+                    {...field}
+                    title={field.name}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="materials"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Materials & build</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Solid oak frame, high-resilience foam, steel hardware, performance fabric upholstery"
+                    disabled={loading}
+                    {...field}
+                    title={field.name}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="leadTime"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Lead time</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. Made to order in 10–14 days"
+                    disabled={loading}
+                    {...field}
+                    title={field.name}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <FormField
             control={form.control}
             name="sizeIds"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sizes</FormLabel>
+                <FormLabel>Variants (with dimensions)</FormLabel>
                 <div className="rounded-md border p-4 space-y-3">
                   {sizes.map((size) => {
                     const isChecked = field.value?.includes(size.id);
@@ -344,7 +391,7 @@ export const ProductForm = ({
             name="colorIds"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Colors</FormLabel>
+                <FormLabel>Finishes / upholstery</FormLabel>
                 <div className="rounded-md border p-4 space-y-3">
                   {colors.map((color) => {
                     const isChecked = field.value?.includes(color.id);
@@ -428,15 +475,33 @@ export const ProductForm = ({
                     disabled={loading}
                     {...field}
                     title={field.name}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="customization"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Customization options</FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder="Leg finishes, arm styles, cushion firmness, modular pieces, add-on headboard, etc."
+                disabled={loading}
+                {...field}
+                title={field.name}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           <FormField
             control={form.control}
             name="isFeatured"

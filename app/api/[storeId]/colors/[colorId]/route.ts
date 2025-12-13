@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     if (!params.colorId) {
-      return new NextResponse("Color id is required", { status: 400 });
+      return new NextResponse("Finish id is required", { status: 400 });
     }
 
     const color = await prismadb.color.findUnique({
@@ -51,11 +51,11 @@ export async function PATCH(
     }
 
     if (!value) {
-      return new NextResponse("Value is required", { status: 400 });
+      return new NextResponse("Swatch hex value is required", { status: 400 });
     }
 
     if (!params.colorId) {
-      return new NextResponse("Color id is required", { status: 400 });
+      return new NextResponse("Finish id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findUnique({
@@ -91,7 +91,7 @@ export async function DELETE(
     }
 
     if (!params.colorId) {
-      return new NextResponse("Color id is required", { status: 400 });
+      return new NextResponse("Finish id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findUnique({

@@ -19,21 +19,21 @@ const SizeClient = ({ data }: { data: SizeColumn[] }) => {
     <React.Fragment>
       <div className="flex flex-wrap items-center justify-between gap-y-3">
         <Heading
-          title={`Sizes (${data.length})`}
-          description="Manage sizes for your store"
+          title={`Variants (${data.length})`}
+          description="Manage seating/bed/table variants with dimensions"
         />
 
         <Button asChild className="min-w-fit">
           <Link href={`/${params.storeId}/sizes/new`}>
             <Plus className="mr-2 w-4" />
-            Add New
+            Add variant
           </Link>
         </Button>
       </div>
       <Separator />
       <DataTable columns={columns} data={data} searchKey="name" />
       <section>
-        <Heading title="API" description="API calls for Sizes" />
+        <Heading title="API" description="API calls for variants" />
         <Separator className="my-2" />
         <ApiList entityName="sizes" entityIdName="sizeId" />
       </section>

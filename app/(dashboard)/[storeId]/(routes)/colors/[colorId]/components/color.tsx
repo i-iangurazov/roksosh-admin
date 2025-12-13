@@ -20,8 +20,8 @@ export const Color = ({ initialData }: { initialData: ColorModel | null }) => {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const title = initialData ? "Edit color" : "Create color";
-  const description = initialData ? "Edit a color" : "Add a new color";
+  const title = initialData ? "Edit finish" : "Create finish";
+  const description = initialData ? "Edit a finish" : "Add a new finish";
 
   const onDelete = async () => {
     try {
@@ -29,10 +29,10 @@ export const Color = ({ initialData }: { initialData: ColorModel | null }) => {
       await axios.delete(`/api/${params.storeId}/colors/${params.colorId}`);
       router.refresh();
       router.push(`/${params.storeId}/colors`);
-      toast.success("Color deleted.");
+      toast.success("Finish deleted.");
     } catch (error) {
       toast.error(
-        "Make shure you removed all products using this color first.",
+        "Remove this finish from products before deleting it.",
       );
     } finally {
       setLoading(false);

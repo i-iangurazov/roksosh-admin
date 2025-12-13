@@ -100,9 +100,12 @@ model Product {
   descriptionKg String      @db.Text
   price         Decimal
   weight        Decimal
+  dimensions    String      @db.Text
+  materials     String      @db.Text
+  customization String?     @db.Text
+  leadTime      String      @default("")
   isFeatured    Boolean     @default(false)
   isArchived    Boolean     @default(false)
-  brand         String      @default("Essentials")
   sizes         Size[]      @relation("ProductSizes")
   colors        Color[]     @relation("ProductColors")
   images        Image[]

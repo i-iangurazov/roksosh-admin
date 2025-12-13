@@ -27,9 +27,25 @@ export async function POST(req: Request, { params }: { params: { storeId: string
     // }
 
     const body = await req.json();
-    const { 
-      name, description, nameRu, nameKg, descriptionRu, descriptionKg, 
-      price, weight, brand, categoryId, colorIds, sizeIds, images, isFeatured, isArchived 
+    const {
+      name,
+      description,
+      nameRu,
+      nameKg,
+      descriptionRu,
+      descriptionKg,
+      price,
+      weight,
+      categoryId,
+      colorIds,
+      sizeIds,
+      images,
+      isFeatured,
+      isArchived,
+      dimensions,
+      materials,
+      customization,
+      leadTime,
     } = body;
 
     // Input validation
@@ -37,10 +53,11 @@ export async function POST(req: Request, { params }: { params: { storeId: string
     if (!description) return new NextResponse("Description is required", { status: 400 });
     if (!price) return new NextResponse("Price is required", { status: 400 });
     if (!weight) return new NextResponse("Weight is required", { status: 400 });
-    if (!brand) return new NextResponse("Brand is required", { status: 400 });
+    if (!dimensions) return new NextResponse("Dimensions are required", { status: 400 });
+    if (!materials) return new NextResponse("Materials are required", { status: 400 });
     if (!categoryId) return new NextResponse("Category id is required", { status: 400 });
-    if (!colorIds || !colorIds.length) return new NextResponse("At least one color is required", { status: 400 });
-    if (!sizeIds || !sizeIds.length) return new NextResponse("At least one size is required", { status: 400 });
+    if (!colorIds || !colorIds.length) return new NextResponse("At least one finish option is required", { status: 400 });
+    if (!sizeIds || !sizeIds.length) return new NextResponse("At least one variant is required", { status: 400 });
     if (!images || !images.length) return new NextResponse("Images are required", { status: 400 });
 
     // const storeByUserId = await prismadb.store.findUnique({
@@ -62,7 +79,10 @@ export async function POST(req: Request, { params }: { params: { storeId: string
         price,
         weight,
         categoryId,
-        brand,
+        dimensions,
+        materials,
+        customization,
+        leadTime: leadTime ?? "",
         colors: {
           connect: colorIds.map((id: string) => ({ id })),
         },
@@ -93,7 +113,6 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
     const categories = searchParams.getAll("categoryId");
     const colors = searchParams.getAll("colorId") || undefined;
     const sizes = searchParams.getAll("sizeId") || undefined;
-    const brandFilters = searchParams.getAll("brand") || undefined;
     const searchTerm = searchParams.get("searchTerm") || undefined;
     const priceSort = searchParams.get("priceSort");
     const minPrice = searchParams.get("minPrice");
@@ -112,7 +131,6 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
         categoryId: categories.length > 0 ? { in: categories } : undefined,
         colors: colors.length > 0 ? { some: { id: { in: colors } } } : undefined,
         sizes: sizes.length > 0 ? { some: { id: { in: sizes } } } : undefined,
-        brand: brandFilters && brandFilters.length > 0 ? { in: brandFilters } : undefined,
         price: {
           gte: minPrice ? parseFloat(minPrice) : undefined,
           lte: maxPrice ? parseFloat(maxPrice) : undefined,
@@ -126,7 +144,6 @@ export async function GET(req: Request, { params }: { params: { storeId: string 
                 { description: { contains: searchTerm, mode: "insensitive" } },
                 { descriptionRu: { contains: searchTerm, mode: "insensitive" } },
                 { descriptionKg: { contains: searchTerm, mode: "insensitive" } },
-                { brand: { contains: searchTerm, mode: "insensitive" } },
               ],
             }
           : {}),

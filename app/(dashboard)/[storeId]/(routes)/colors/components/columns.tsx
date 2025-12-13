@@ -14,11 +14,11 @@ export type ColorColumn = {
 export const columns: ColumnDef<ColorColumn>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Finish",
   },
   {
     accessorKey: "value",
-    header: "Value",
+    header: "Swatch",
     cell: ({ row }) => (
       <div className="flex items-center gap-x-2">
         <div

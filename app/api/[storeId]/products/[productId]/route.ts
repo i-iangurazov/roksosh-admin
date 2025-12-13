@@ -50,7 +50,26 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
     }
 
     const body = await req.json();
-    const { name, description, nameRu, nameKg, descriptionRu, descriptionKg, price, weight, brand, categoryId, colorIds, sizeIds, images, isFeatured, isArchived } = body;
+    const {
+      name,
+      description,
+      nameRu,
+      nameKg,
+      descriptionRu,
+      descriptionKg,
+      price,
+      weight,
+      categoryId,
+      colorIds,
+      sizeIds,
+      images,
+      isFeatured,
+      isArchived,
+      dimensions,
+      materials,
+      customization,
+      leadTime,
+    } = body;
 
     if (!description && !descriptionRu && !descriptionKg) {
       return new NextResponse("At least one description is required", { status: 400 });
@@ -72,13 +91,16 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
       return new NextResponse("Category is required", { status: 400 });
     }
     if (!colorIds || !colorIds.length) {
-      return new NextResponse("At least one color is required", { status: 400 });
+      return new NextResponse("At least one finish option is required", { status: 400 });
     }
     if (!sizeIds || !sizeIds.length) {
-      return new NextResponse("At least one size is required", { status: 400 });
+      return new NextResponse("At least one variant is required", { status: 400 });
     }
-    if (!brand) {
-      return new NextResponse("Brand is required", { status: 400 });
+    if (!dimensions) {
+      return new NextResponse("Dimensions are required", { status: 400 });
+    }
+    if (!materials) {
+      return new NextResponse("Materials are required", { status: 400 });
     }
 
     if (!images || !images.length) {
@@ -117,7 +139,10 @@ export async function PATCH(req: Request, { params }: { params: { storeId: strin
         price,
         weight,
         categoryId,
-        brand,
+        dimensions,
+        materials,
+        customization,
+        leadTime: leadTime ?? "",
         colors: {
           set: colorIds.map((id: string) => ({ id })),
         },

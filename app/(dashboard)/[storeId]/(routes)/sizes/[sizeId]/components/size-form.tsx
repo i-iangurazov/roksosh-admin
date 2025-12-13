@@ -22,10 +22,10 @@ import { Input } from "@/components/ui/input";
 
 // Update the form schema to handle new fields for name in different languages
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
+  name: z.string().min(1, "Variant name is required"),
   nameRu: z.string().min(1, "Russian name is required"),
   nameKg: z.string().min(1, "Kyrgyz name is required"),
-  value: z.string().min(1, "Size value is required"),
+  value: z.string().min(1, "Layout / dimension details are required"),
 });
 
 type SizeFormValues = z.infer<typeof formSchema>;
@@ -36,7 +36,7 @@ export const SizeForm = ({ initialData }: { initialData: Size | null }) => {
 
   const [loading, setLoading] = React.useState(false);
 
-  const toastMessage = initialData ? "Size updated." : "Size created.";
+  const toastMessage = initialData ? "Variant updated." : "Variant created.";
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<SizeFormValues>({
@@ -77,10 +77,10 @@ export const SizeForm = ({ initialData }: { initialData: Size | null }) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Variant name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Size name"
+                    placeholder="e.g. 1-seater, 2-seater, king bed"
                     disabled={loading}
                     {...field}
                     title={field.name}
@@ -96,10 +96,10 @@ export const SizeForm = ({ initialData }: { initialData: Size | null }) => {
             name="nameRu"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Russian Name</FormLabel>
+                <FormLabel>Russian name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Size name in Russian"
+                    placeholder="Название варианта"
                     disabled={loading}
                     {...field}
                     title={field.name}
@@ -115,10 +115,10 @@ export const SizeForm = ({ initialData }: { initialData: Size | null }) => {
             name="nameKg"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Kyrgyz Name</FormLabel>
+                <FormLabel>Kyrgyz name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Size name in Kyrgyz"
+                    placeholder="Вариант кыргызча"
                     disabled={loading}
                     {...field}
                     title={field.name}
@@ -136,10 +136,10 @@ export const SizeForm = ({ initialData }: { initialData: Size | null }) => {
             name="value"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Value</FormLabel>
+                <FormLabel>Dimensions</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Size value"
+                    placeholder="e.g. 100×99×69 cm"
                     disabled={loading}
                     {...field}
                     title={field.value}

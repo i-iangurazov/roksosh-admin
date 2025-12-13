@@ -17,7 +17,7 @@ export async function POST(
     const { name, nameRu, nameKg, value } = body;
 
     if (!value) {
-      return new NextResponse("Value is required", { status: 400 });
+      return new NextResponse("Layout / dimensions value is required", { status: 400 });
     }
 
     if (!name && !nameRu && !nameKg) {

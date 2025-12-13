@@ -615,7 +615,7 @@ type SizeRange = "XS-XL" | "S-XL";
 
 interface RawProductSeed {
   name: string;
-  brand: string;
+  brand?: string;
   descGroup:
     | "revengexBaggy"
     | "revengexZipped"
@@ -978,7 +978,6 @@ export async function seedProducts(database: any) {
         name: p.name,
         nameRu: p.name,
         nameKg: p.name,
-        brand: p.brand,
         description: desc.en,
         descriptionRu: desc.ru,
         descriptionKg: desc.kg,

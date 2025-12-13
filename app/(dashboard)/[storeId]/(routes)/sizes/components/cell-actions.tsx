@@ -25,7 +25,7 @@ const CellActions = ({ data }: { data: SizeColumn }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Size Id copied.");
+    toast.success("Variant Id copied.");
   };
 
   const onDelete = async () => {
@@ -33,9 +33,9 @@ const CellActions = ({ data }: { data: SizeColumn }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
       router.refresh();
-      toast.success("Size deleted.");
+      toast.success("Variant deleted.");
     } catch (error) {
-      toast.error("Make shure you removed all products using this size first.");
+      toast.error("Remove this variant from products before deleting it.");
     } finally {
       setLoading(false);
       setOpen(false);

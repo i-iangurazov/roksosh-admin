@@ -71,7 +71,7 @@ export async function POST(
           price_data: {
               currency: "KGS",
               product_data: {
-                  name: [product.brand, product.name].filter(Boolean).join(" - "),
+                  name: product.name,
               },
               unit_amount: Number(product.price) * 100,
           },

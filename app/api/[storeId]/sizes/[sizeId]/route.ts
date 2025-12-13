@@ -10,7 +10,7 @@ export async function GET(
   try {
     const lang = params.lang || "en"; // Default to English if lang param is not provided
     if (!params.sizeId) {
-      return new NextResponse("Size id is required", { status: 400 });
+      return new NextResponse("Configuration id is required", { status: 400 });
     }
 
     const size = await prismadb.size.findUnique({
@@ -46,11 +46,11 @@ export async function PATCH(
     }
 
     if (!value) {
-      return new NextResponse("Value is required", { status: 400 });
+      return new NextResponse("Layout / dimensions value is required", { status: 400 });
     }
 
     if (!params.sizeId) {
-      return new NextResponse("Size id is required", { status: 400 });
+      return new NextResponse("Configuration id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findUnique({
@@ -90,7 +90,7 @@ export async function DELETE(
     }
 
     if (!params.sizeId) {
-      return new NextResponse("Size id is required", { status: 400 });
+      return new NextResponse("Configuration id is required", { status: 400 });
     }
 
     const storeByUserId = await prismadb.store.findUnique({

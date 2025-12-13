@@ -20,7 +20,7 @@ const ProductClient = ({ data }: { data: ProductColumn[] }) => {
       <div className="flex flex-wrap items-center justify-between gap-y-3">
         <Heading
           title={`Products (${data.length})`}
-          description="Manage products for your store"
+          description="Manage configurable furniture SKUs and variants"
         />
 
         <Button asChild className="min-w-fit">

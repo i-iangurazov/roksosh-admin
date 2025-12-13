@@ -25,7 +25,7 @@ const CellActions = ({ data }: { data: ColorColumn }) => {
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Color Id copied.");
+    toast.success("Finish Id copied.");
   };
 
   const onDelete = async () => {
@@ -33,10 +33,10 @@ const CellActions = ({ data }: { data: ColorColumn }) => {
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
       router.refresh();
-      toast.success("Color deleted.");
+      toast.success("Finish deleted.");
     } catch (error) {
       toast.error(
-        "Make shure you removed all products using this color first.",
+        "Remove this finish from products before deleting it.",
       );
     } finally {
       setLoading(false);
